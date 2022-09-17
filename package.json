@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/Rsangram007/Project-all-Ans/issues"
   },
-  "homepage": "https://github.com/Rsangram007/Project-all-Ans#readme"
+  "homepage": "https://github.com/Rsangram007/Project-all-Ans#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
+    "mongoose": "^6.6.1",
+    "nodemon": "^2.0.20"
+  }
 }
