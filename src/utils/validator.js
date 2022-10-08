@@ -13,17 +13,35 @@ const isValid = function (value) {
   if (typeof value === "string" && value.trim().length > 0) return true;
   return false;
 };
-const isValidLink = function (value) {
-  if (/^https?:\/\/.*\.[s3].*\.(png|gif|webp|jpeg|jpg)\??.*$/gim.test(value))
+const isValidPassword = function (value) {
+  if (
+    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/.test(
+      value
+    )
+  )
     return true;
-  return false;
-};
-const isValidMobile = function (value) {
-  if (typeof value === "string" && /^[0-9]\d{9}$/gi.test(value)) return true;
   return false;
 };
 const isValidEmail = function (value) {
   if (/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)) return true;
+  return false;
+};
+const isValidDate = function (value) {
+  if (/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/.test(value))
+    return true;
+  return false;
+};
+
+const isValidTitle = function (title) {
+  return ["Mr", "Mrs", "Miss"].includes(title);
+};
+
+const isValidMobile = function (value) {
+  if (typeof value === "string" && /^[0-9]\d{9}$/gi.test(value)) return true;
+  return false;
+};
+const isValidISBN = function (value) {
+  if (/^[\d]{3}-[\d]{10}$/gi.test(value)) return true;
   return false;
 };
 
@@ -35,12 +53,24 @@ const isValidObjectId = function (objectId) {
   return mongoose.isValidObjectId(objectId);
 };
 
+const isStringsArray = function (arr) {
+  if (!Array.isArray(arr)) return false;
+  for (let i = 0; i < arr.length; i++) {
+    if (typeof arr[i] !== "string" || arr[i].trim().length === 0) return false;
+  }
+  return true;
+};
+
 module.exports = {
   isValid,
+  isValidTitle,
   isValidRequestBody,
   isValidObjectId,
+  isValidPassword,
   isValidEmail,
+  isStringsArray,
   isValidName,
   isValidMobile,
-  isValidLink,
+  isValidISBN,
+  isValidDate,
 };

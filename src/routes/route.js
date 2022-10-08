@@ -1,16 +1,28 @@
 const express = require("express");
 const router = express.Router();
-const collegeController = require("../controllers/collegeController");
-const internController = require("../controllers/internController");
+const bookController = require("../controllers/bookController");
+const userController = require("../controllers/userController");
+const reviewController = require("../controllers/reviewController");
+const auth = require("../middlewares/auth");
 
-router.post("/functionup/colleges", collegeController.registerCollege);
+//user api
+router.post("/register", userController.createUser);
+router.post("/login", userController.userLogin);
 
-router.post("/functionup/interns", internController.interns);
+//Book api
+router.post("/books", auth.Authentication, bookController.createBook);
+router.get("/books", auth.Authentication, bookController.getBooks);
+router.get("/books/:bookId", auth.Authentication, bookController.getBookById);
+router.put("/books/:bookId",auth.Authentication,auth.Authorisation,bookController.updateBook);
+router.delete( "/books/:bookId",auth.Authentication,auth.Authorisation,bookController.deleteBookById);
 
-router.get("/functionup/collegeDetails", collegeController.collegeDetails);
+//Review api
+router.post("/books/:bookId/review", reviewController.createReview);
+router.put("/books/:bookId/review/:reviewId",reviewController.updateReviewByID);
+router.delete("/books/:bookId/review/:reviewId",reviewController.deleteReviewById);
 
-router.all("/*", function (req, res) {
-  res.status(400).send("Invalid request....!!!");
+router.all("/***", function (req, res) {
+  res.status(400).send({status:false,message:"invalid request!!"});
 });
 
-module.exports = router;
+module.exports = router
